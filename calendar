@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+require 'net/http'
+require 'uri'
+
+arrayCours = []
+
+class Date
+	attr_accessor :annee, :mois, :jour, :heure, :minute
+	def initialize(time)
+        @annee = time[0..3]
+        @mois = time[4..5]
+        @jour = time[6..7]
+        @heure = time[9..10]
+        @minute = time[11..12]
+	end
+ 
+	def to_s
+		return @jour + "/" + @mois + "/" + @annee + " " + @heure + ":" + @minute
+	end
+end
+
+class Cours
+	attr_accessor :nom, :date_debut, :date_fin, :salle, :uid
+	def initialize()
+		@nom = @date_debut = @date_fin = @salle = @uid = ""
+	end
+ 
+	def to_s
+		return @nom +
+        "\n  - " + @salle +
+        "\n  - " + @date_debut.to_s +
+        "\n  - " + @date_fin.to_s
+	end
+end
+
+uri = URI.parse("http://edt.uca.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=3348&nbWeeks=3&calType=ical&projectId=3")
+response = Net::HTTP.get_response(uri)
+
+date = Time.now.strftime("%Y%m%d")
+read = false
+
+cours = ""
+response.body.each_line { | line | 
+    
+    if(line.start_with?("DTSTART:" + date))
+        read = true
+        cours = Cours.new()
+    end
+
+    if(line.start_with?("END:VEVENT") && read)
+        arrayCours.push(cours)
+        read = false
+    end
+
+    if(read)
+        map = line.split(":")
+        case map[0]
+        when "SUMMARY"
+            cours.nom = map[1].gsub!("\n", "")
+        when "DTSTART"
+            cours.date_debut = Date.new(map[1].gsub!("\n", ""))
+        when "DTEND"
+            cours.date_fin = Date.new(map[1].gsub!("\n", ""))
+        when "LOCATION"
+            cours.salle = map[1].gsub!("\n", "")
+        end
+    end
+}
+
+arrayCours.each_entry { | cours |
+	puts cours.to_s
+}
