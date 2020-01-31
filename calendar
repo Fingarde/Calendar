@@ -41,7 +41,6 @@ read = false
 
 cours = ""
 response.body.each_line { | line | 
-    
     if(line.start_with?("DTSTART:" + date))
         read = true
         cours = Cours.new()
