@@ -1,0 +1,24 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fingarde/Calendar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fingarde/Calendar/issues"
+  },
+  "homepage": "https://github.com/Fingarde/Calendar#readme",
+  "dependencies": {
+    "dateformat": "^3.0.3",
+    "googleapis": "^39.2.0",
+    "sync-request": "^6.1.0"
+  }
+}
