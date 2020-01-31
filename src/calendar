@@ -2,6 +2,11 @@
 require 'net/http'
 require 'uri'
 
+require 'google/apis/calendar_v3'
+
+Calendar = Google::Apis::CalendarV3
+
+
 arrayCours = []
 
 class Date
@@ -70,3 +75,31 @@ response.body.each_line { | line |
 arrayCours.each_entry { | cours |
 	puts cours.to_s
 }
+
+
+
+
+event = Google::Apis::CalendarV3::Event.new(
+  summary: 'Appointment',
+  location: 'Somewhere',
+  organizer: {
+    email: 'organizerEmail',
+    display_name: 'organizerDisplayName'
+  },
+  start: {
+    date_time: '2011-06-03T10:00:00.000-07:00'
+  },
+  end: {
+    date_time: '2011-06-03T10:25:00.000-07:00'
+  },
+  attendees: [
+    {
+      email: 'attendeeEmail',
+      display_name: 'attendeeDisplayName',
+    },
+    # ...
+  ],
+  i_cal_uid: 'originalUID'
+)
+result = client.import_event('primary', event)
+print result.id
