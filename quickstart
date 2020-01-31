@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+require 'google/apis/calendar_v3'
+require 'googleauth'
+require 'oauth'
+
+ENV['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/fingarde/Downloads/credentials.json'
+
+def createServiceObject()
+    service = Google::Apis::CalendarV3::CalendarService.new
+    scope = ["https://www.googleapis.com/auth/calendar"]
+    service.authorization = Google::Auth.get_application_default(scope)
+    service.authorization.fetch_access_token!
+    return service
+end
+
+service = createServiceObject()
+response = service.list_calendar_lists()
+puts response
+puts response.items

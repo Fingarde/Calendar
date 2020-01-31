@@ -4,7 +4,7 @@ require 'uri'
 
 require 'google/apis/calendar_v3'
 
-Calendar = Google::Apis::CalendarV3
+Calendar = Google::Apis::CalendarV3::
 
 
 arrayCours = []

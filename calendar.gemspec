@@ -1,4 +1,4 @@
-Gem::Specification.new do |s|
+Gem::Specification.new do | s |
   s.name        = 'calendar'
   s.version     = '0.0.0'
   s.date        = '2020-01-31'
