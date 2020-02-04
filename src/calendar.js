@@ -3,10 +3,10 @@ const {google} = require('googleapis');
 const readline = require('readline');
 
 const SCOPES = ['https://www.googleapis.com/auth/calendar']
-
+const TOKEN_PATH = 'token.json'
 exports.connect = async function connect(token) {
 	try {
-		let content = fs.readFileSync('/home/fingarde/Downloads/credentials.json')
+		let content = fs.readFileSync('res/credentials.json')
 		let auth = await authorize(JSON.parse(content), token)
 		
 		return auth
