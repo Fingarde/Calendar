@@ -21,6 +21,7 @@ async function main() {
         let same = true
         for(let i = 0; i < iCal.length; i++) {
             if(iCalArray[i] != oldICalArray[i]) {
+                console.log(iCalArray[i])
                 if(iCalArray[i].startsWith('DTSTAMP'))
                     continue
 
@@ -43,6 +44,7 @@ async function main() {
     if(!calendarID) {
         calendarID = await createCalendar(auth)
     }
+
     let date = new Date()
     date.setHours(0)
     date.setMinutes(0)
@@ -64,7 +66,7 @@ async function main() {
                 let sameDebut = debutClone.toISOString().substring(0, 19) + 'Z' == event.start.dateTime
                 let sameFin = finClone.toISOString().substring(0, 19) + 'Z' == event.end.dateTime
               
-                if(event.summary == cour.nom && sameDebut && sameFin && event.sequence == 140) {
+                if(event.summary == cour.nom && sameDebut && sameFin) {
                     contains = true
                 }
             })
